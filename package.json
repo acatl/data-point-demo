@@ -1,0 +1,14 @@
+{
+  "name": "data-point-demo",
+  "version": "1.0.0",
+  "description": "data-point demo",
+  "main": "index.js",
+  "author": "acatl.pacheco@gmail.com",
+  "license": "MIT",
+  "dependencies": {
+    "data-point": "3.5.0-alpha.822ab2c9",
+    "mongodb": "^3.2.7",
+    "nodemon": "^1.19.1",
+    "prettier": "^1.18.2"
+  }
+}
