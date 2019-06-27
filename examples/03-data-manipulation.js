@@ -38,7 +38,13 @@ const data = {
   url: "https://swapi.co/api/planets/1/"
 };
 
-// TODO: parse integer
+// TODO: items to review
+// [ ] - PathReducer - get all
+// [ ] - PathReducer - get property
+// [ ] - PathReducer - get nested property
+// [ ] - FunctionReducer - parse integer
+// [ ] - ModelReducer - map properties
+// [ ] - ModelReducer - all together
 
 async function main() {
   // create data point instance

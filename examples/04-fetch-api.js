@@ -3,7 +3,12 @@ const DataPoint = require("data-point");
 
 const dp = DataPoint.create();
 
-// create Request Entity to hit: https://swapi.co/api/planets/
+// DEMO:
+// [ ] - create Request Entity to get all planets: https://swapi.co/api/planets/
+// [ ] - create Request Entity to get single planet: https://swapi.co/api/planets/<PLANET_ID>
+// [ ] - catch errors
+// [ ] - setInput
+// [ ] - use `after`
 
 async function main() {
   const result = await dp.resolve();
