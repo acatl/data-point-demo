@@ -4,15 +4,19 @@ const DataPoint = require("data-point");
 const MongoClient = require("mongodb").MongoClient;
 
 async function getPeople(value, accumulator) {
-  const db = accumulator.locals.database;
+  const database = accumulator.values.database;
+  const collection = database.collection("people");
+  return collection.find().toArray();
+}
 
-  const collection = db.collection("people");
-  const people = await collection
+async function getPerson(personId, accumulator) {
+  const database = accumulator.values.database;
+  const collection = database.collection("people");
+  return collection
     .find({
-      id: value
+      id: personId
     })
     .toArray();
-  return people;
 }
 
 async function main() {
@@ -22,11 +26,11 @@ async function main() {
 
   const database = mongoClient.db("starwars");
 
-  const dataPoint = DataPoint.create();
+  const dp = DataPoint.create();
 
-  const result = await dataPoint.resolve(getPeople, 6, {
-    locals: { database }
-  });
+  dp.addValue("database", database);
+
+  const result = await dp.resolve([getPerson, "$[0].description"], 1);
 
   console.log(result);
 

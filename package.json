@@ -7,6 +7,7 @@
   "license": "MIT",
   "dependencies": {
     "data-point": "3.5.0-alpha.822ab2c9",
+    "express": "^4.17.1",
     "mongodb": "^3.2.7",
     "nodemon": "^1.19.1",
     "prettier": "^1.18.2"

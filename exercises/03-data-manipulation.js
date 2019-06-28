@@ -2,7 +2,7 @@ const DataPoint = require("data-point");
 
 console.clear();
 
-const planet = {
+const data = {
   name: "Tatooine",
   metrics: {
     rotation_period: "23",
@@ -38,11 +38,39 @@ const planet = {
   url: "https://swapi.co/api/planets/1/"
 };
 
+// TODO: items to review
+// [ ] - PathReducer - get all
+// [ ] - PathReducer - get property
+// [ ] - PathReducer - get nested property
+// [ ] - FunctionReducer - parse integer
+// [ ] - ModelReducer - map properties
+// [ ] - ModelReducer - all together
+
+const parseInteger = value => {
+  return parseInt(value);
+};
+
+const getIndex6 = value => {
+  return value.filter(item => item.id === 6);
+};
+
+const PlanetModel = {
+  name: "$name",
+  myMetrics: {
+    rotationPeriod: ["$metrics.rotation_period", parseInteger]
+  }
+};
+
 async function main() {
+  // create data point instance
   const dp = DataPoint.create();
-  const result = await dp.resolve("$residents[0]", planet);
+
+  // "$metrics.diameter", parseInteger
+  const result = await dp.resolve([PlanetModel], data);
+
   console.dir(result);
+
+  console.log("");
 }
 
 main();
-console.log("");
