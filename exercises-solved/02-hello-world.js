@@ -18,4 +18,4 @@ async function main() {
   console.dir(result);
 }
 
-main();
+main().catch(error => console.log(error));

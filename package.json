@@ -6,7 +6,7 @@
   "author": "acatl.pacheco@gmail.com",
   "license": "MIT",
   "dependencies": {
-    "data-point": "3.5.0-alpha.822ab2c9",
+    "data-point": "3.4.4",
     "express": "^4.17.1",
     "mongodb": "^3.2.7",
     "nodemon": "^1.19.1",

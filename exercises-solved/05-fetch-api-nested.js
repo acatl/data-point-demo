@@ -4,33 +4,37 @@ console.clear();
 // DEMO:
 // [ ] - Create PlanetRequest entity api: https://swapi.co/api/planets/<NUMBER>
 // [ ] - get name and rotation, period & residents
-// [ ] - get all residents
-// [ ] - get get residents name and species
+// [ ] - get all residents, create generic request
+// [ ] - get residents name and species using map
 
-const PlanetRequest = DataPoint.Request("PlanetRequest", {
+const parseInteger = value => {
+  return parseInt(value, 10);
+};
+
+const PlanetRequest = DataPoint.Request({
   url: "https://swapi.co/api/planets/{value}"
 });
 
-const getURL = DataPoint.Request("getURL", {
+const getURL = DataPoint.Request({
   url: "{value}"
 });
 
-const ResidentModel = {
+const Resident = {
   name: "$name",
   species: ["$species[0]", getURL, "$name"]
 };
 
-const PlanetModel = {
+const Planet = {
   name: "$name",
-  rotationPeriod: "$rotation_period",
-  residents: ["$residents", DataPoint.map([getURL, ResidentModel])]
+  rotationPeriod: ["$rotation_period", parseInteger],
+  residents: ["$residents", DataPoint.map([getURL, Resident])]
 };
 
 async function main() {
   const dp = DataPoint.create();
-  const result = await dp.resolve([PlanetRequest, PlanetModel], 1);
+  const result = await dp.resolve([PlanetRequest, Planet], 1);
 
   console.dir(result, { depth: null });
 }
 
-main();
+main().catch(error => console.log(error));

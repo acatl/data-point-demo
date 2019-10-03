@@ -478,10 +478,10 @@ dashdash@^1.12.0:
   dependencies:
     assert-plus "^1.0.0"
 
-data-point@3.5.0-alpha.822ab2c9:
-  version "3.5.0-alpha.822ab2c9"
-  resolved "https://registry.yarnpkg.com/data-point/-/data-point-3.5.0-alpha.822ab2c9.tgz#65e3f6dfd84392b76ac42d818294371ee37c269f"
-  integrity sha512-4bxubC2ay+oGEY241/Onp6m2g4AYLfoy6b6TA4FQjTWzImHFFAcm3y6HkhWTRhkL+iKZA3jFBIcH9jJHpKrvEA==
+data-point@3.4.4:
+  version "3.4.4"
+  resolved "https://registry.yarnpkg.com/data-point/-/data-point-3.4.4.tgz#c86fe08e7d4a9f55bf224201fc72784f142ad491"
+  integrity sha512-Fbbdm3e9VmMrvv3uUSp2OZXru4HgNcx5O2X9cyYOIvxIoOTiJ4uoGk9s18EFOVjxRFkWkXxShB2A3P4MeVsH1Q==
   dependencies:
     ajv "5.2.3"
     bluebird "3.5.0"

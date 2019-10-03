@@ -8,7 +8,11 @@ const dp = DataPoint.create();
 // [ ] - create Request Entity to get single planet: https://swapi.co/api/planets/<PLANET_ID>
 // [ ] - catch errors
 // [ ] - setInput
-// [ ] - use `after`
+// [ ] - create ObjectReducer to extract data from planet
+
+const parseInteger = value => {
+  return parseInt(value, 10);
+};
 
 const PlanetsRequest = DataPoint.Request("PlanetsRequest", {
   url: "https://swapi.co/api/planets"
@@ -23,13 +27,17 @@ const PlanetRequest = DataPoint.Request("PlanetRequest", {
       message: reason.message
     };
   },
-  after: "$name",
-  outputType: "string"
+  outputType: "object"
 });
 
+const Planet = {
+  name: "$name",
+  rotationPeriod: ["$rotation_period", parseInteger]
+};
+
 async function main() {
-  const result = await dp.resolve([PlanetRequest], 1);
+  const result = await dp.resolve([PlanetRequest, Planet], 1);
   console.log(result);
 }
 
-main();
+main().catch(error => console.log(error));

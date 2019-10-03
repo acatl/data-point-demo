@@ -42,35 +42,44 @@ const data = {
 // [ ] - PathReducer - get all
 // [ ] - PathReducer - get property
 // [ ] - PathReducer - get nested property
-// [ ] - FunctionReducer - parse integer
-// [ ] - ModelReducer - map properties
-// [ ] - ModelReducer - all together
+// [ ] - FunctionReducer - parse rotation period to integer
+// [ ] - ObjectReducer - map properties
+// [ ] - ModelReducer - create Model
+// [ ] - ModelReducer - check input
+// [ ] - ModelReducer - check output
 
 const parseInteger = value => {
-  return parseInt(value);
+  return parseInt(value, 10);
 };
 
-const getIndex6 = value => {
-  return value.filter(item => item.id === 6);
-};
+const PlanetModel = DataPoint.Model({
+  inputType: value => {
+    if (value.name === undefined) {
+      throw Error("name was not found!");
+    }
+  },
 
-const PlanetModel = {
-  name: "$name",
-  myMetrics: {
-    rotationPeriod: ["$metrics.rotation_period", parseInteger]
+  value: {
+    name: "$name",
+    myMetricss: {
+      rotationPeriod: ["$metrics.rotation_period", parseInteger]
+    }
+  },
+
+  outputType: value => {
+    if (value.name === undefined) {
+      throw Error("name was not found!");
+    }
   }
-};
+});
 
 async function main() {
   // create data point instance
   const dp = DataPoint.create();
 
-  // "$metrics.diameter", parseInteger
-  const result = await dp.resolve([PlanetModel], data);
+  const result = await dp.resolve(PlanetModel, data);
 
   console.dir(result);
-
-  console.log("");
 }
 
-main();
+main().catch(error => console.log(error));

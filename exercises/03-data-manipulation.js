@@ -42,35 +42,23 @@ const data = {
 // [ ] - PathReducer - get all
 // [ ] - PathReducer - get property
 // [ ] - PathReducer - get nested property
-// [ ] - FunctionReducer - parse integer
-// [ ] - ModelReducer - map properties
-// [ ] - ModelReducer - all together
+// [ ] - FunctionReducer - parse rotation period to integer
+// [ ] - ObjectReducer - map properties
+// [ ] - ModelReducer - create Model
+// [ ] - ModelReducer - check input
+// [ ] - ModelReducer - check output
 
 const parseInteger = value => {
-  return parseInt(value);
-};
-
-const getIndex6 = value => {
-  return value.filter(item => item.id === 6);
-};
-
-const PlanetModel = {
-  name: "$name",
-  myMetrics: {
-    rotationPeriod: ["$metrics.rotation_period", parseInteger]
-  }
+  return parseInt(value, 10);
 };
 
 async function main() {
   // create data point instance
   const dp = DataPoint.create();
 
-  // "$metrics.diameter", parseInteger
-  const result = await dp.resolve([PlanetModel], data);
+  // const result = await dp.resolve(, data);
 
   console.dir(result);
-
-  console.log("");
 }
 
-main();
+main().catch(error => console.log(error));

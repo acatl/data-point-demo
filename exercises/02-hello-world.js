@@ -1,5 +1,4 @@
 console.clear();
-const DataPoint = require("data-point");
 
 const sayHello = value => `Hello ${value}`;
 const getExcited = value => `${value}!!`;
@@ -11,11 +10,10 @@ const getLoud = value => value.toUpperCase();
 // [ ] - show only functions: sayHello -> getExcited -> getLoud
 
 async function main() {
-  const dp = DataPoint.create();
   // execute reducer
-  const result = await dp.resolve([sayHello, getExcited, getLoud], "world");
+  const result = "";
 
-  console.dir(result);
+  console.log(result);
 }
 
-main();
+main().catch(error => console.log(error));
