@@ -4,8 +4,8 @@ const DataPoint = require("data-point");
 const dp = DataPoint.create();
 
 // DEMO:
-// [ ] - create Request Entity to get all planets: https://swapi.co/api/planets/
-// [ ] - create Request Entity to get single planet: https://swapi.co/api/planets/<PLANET_ID>
+// [ ] - create Request Entity to get all planets: https://swapi.dev/api/planets/
+// [ ] - create Request Entity to get single planet: https://swapi.dev/api/planets/<PLANET_ID>
 // [ ] - catch errors
 // [ ] - setInput
 // [ ] - create ObjectReducer to extract data from planet
@@ -15,12 +15,12 @@ const parseInteger = value => {
 };
 
 const PlanetsRequest = DataPoint.Request("PlanetsRequest", {
-  url: "https://swapi.co/api/planets"
+  url: "https://swapi.dev/api/planets"
 });
 
 const PlanetRequest = DataPoint.Request("PlanetRequest", {
   inputType: "number",
-  url: "https://swapi.co/api/planets/{value}",
+  url: "https://swapi.dev/api/planets/{value}",
   error: reason => {
     console.error("Failed PlanetRequest", reason.message);
     return {
