@@ -3,13 +3,13 @@ const DataPoint = require("data-point");
 const express = require("express");
 
 // DEMO:
-// [ ] - create Request Entity to get single planet: https://swapi.co/api/planets/<PLANET_ID>
+// [ ] - create Request Entity to get single planet: https://swapi.dev/api/planets/<PLANET_ID>
 // [ ] - return the JSON response of the request on a route /planet/:planetId.json
 // [ ] - create function reducer that returns an HTML with information of the planet
 // [ ] - return the HTML response of the request & the html reducer on route /planet/:planetId
 
 const PlanetRequest = DataPoint.Request("PlanetRequest", {
-  url: "https://swapi.co/api/planets/{value}"
+  url: "https://swapi.dev/api/planets/{value}"
 });
 
 function toHTML(input) {
