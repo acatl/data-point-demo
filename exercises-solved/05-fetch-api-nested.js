@@ -2,7 +2,7 @@ const DataPoint = require("data-point");
 console.clear();
 
 // DEMO:
-// [ ] - Create PlanetRequest entity api: https://swapi.co/api/planets/<NUMBER>
+// [ ] - Create PlanetRequest entity api: https://swapi.dev/api/planets/<NUMBER>
 // [ ] - get name and rotation, period & residents
 // [ ] - get all residents, create generic request
 // [ ] - get residents name and species using map
@@ -12,7 +12,7 @@ const parseInteger = value => {
 };
 
 const PlanetRequest = DataPoint.Request({
-  url: "https://swapi.co/api/planets/{value}"
+  url: "https://swapi.dev/api/planets/{value}"
 });
 
 const getURL = DataPoint.Request({

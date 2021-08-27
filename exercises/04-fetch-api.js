@@ -4,8 +4,8 @@ const DataPoint = require("data-point");
 const dp = DataPoint.create();
 
 // DEMO:
-// [ ] - create Request Entity to get all planets: https://swapi.co/api/planets/
-// [ ] - create Request Entity to get single planet: https://swapi.co/api/planets/<PLANET_ID>
+// [ ] - create Request Entity to get all planets: https://swapi.dev/api/planets/
+// [ ] - create Request Entity to get single planet: https://swapi.dev/api/planets/<PLANET_ID>
 // [ ] - catch errors
 // [ ] - setInput
 // [ ] - create ObjectReducer to extract data from planet

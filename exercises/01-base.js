@@ -6,7 +6,8 @@ const getLoud = value => value.toUpperCase();
 
 // DEMO:
 // [ ] - show only functions: sayHello -> getExcited -> getLoud
-// [ ] - raw reduce implementation
+// [ ] - raw reduce implementation with `for of`
+// [ ] - raw reduce implementation with `Array.reducer`
 
 async function main() {
   const result = "";
