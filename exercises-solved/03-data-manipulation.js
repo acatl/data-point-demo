@@ -6,36 +6,64 @@ const data = {
   name: "Tatooine",
   metrics: {
     rotation_period: "23",
-    orbital_period: "304",
-    diameter: "10465",
-    gravity: "1 standard",
     surface_water: "1"
   },
   climate: "arid",
   terrain: "desert",
   population: "200000",
   residents: [
-    "https://swapi.dev/api/people/1/",
-    "https://swapi.dev/api/people/2/",
-    "https://swapi.dev/api/people/4/",
-    "https://swapi.dev/api/people/6/",
-    "https://swapi.dev/api/people/7/",
-    "https://swapi.dev/api/people/8/",
-    "https://swapi.dev/api/people/9/",
-    "https://swapi.dev/api/people/11/",
-    "https://swapi.dev/api/people/43/",
-    "https://swapi.dev/api/people/62/"
-  ],
-  films: [
-    "https://swapi.dev/api/films/5/",
-    "https://swapi.dev/api/films/4/",
-    "https://swapi.dev/api/films/6/",
-    "https://swapi.dev/api/films/3/",
-    "https://swapi.dev/api/films/1/"
-  ],
-  created: "2014-12-09T13:50:49.641000Z",
-  edited: "2014-12-21T20:48:04.175778Z",
-  url: "https://swapi.dev/api/planets/1/"
+    {
+      name: "Luke Skywalker",
+      height: "172",
+      mass: "77"
+    },
+    {
+      name: "C-3PO",
+      height: "167",
+      mass: "75"
+    },
+    {
+      name: "Darth Vader",
+      height: "202",
+      mass: "136"
+    }
+  ]
+};
+
+// simplified JSON Schema
+const schema = {
+  type: "object",
+  default: {},
+  required: ["name", "climate", "rotationPeriod", "firstResident"],
+  properties: {
+    name: {
+      $id: "#/properties/name",
+      type: "string"
+    },
+    climate: {
+      $id: "#/properties/climate",
+      type: "string"
+    },
+    rotationPeriod: {
+      $id: "#/properties/rotationPeriod",
+      type: "integer"
+    },
+    firstResident: {
+      $id: "#/properties/firstResident",
+      type: "array",
+      additionalItems: true,
+      items: {
+        $id: "#/properties/firstResident/items",
+        anyOf: [
+          {
+            $id: "#/properties/firstResident/items/anyOf/0",
+            type: "string"
+          }
+        ]
+      }
+    }
+  },
+  additionalProperties: true
 };
 
 // TODO: items to review
@@ -46,38 +74,40 @@ const data = {
 // [ ] - ObjectReducer - map properties
 // [ ] - ModelReducer - create Model
 // [ ] - ModelReducer - check input
-// [ ] - ModelReducer - check output
+// [ ] - ModelReducer - check output using plain JS type checks
+// [ ] - SchemaReducer - check output using SchemaReducer
 
 const parseInteger = value => {
   return parseInt(value, 10);
 };
 
-const PlanetModel = DataPoint.Model({
-  inputType: value => {
-    if (value.name === undefined) {
-      throw Error("name was not found!");
-    }
-  },
-
-  value: {
-    name: "$name",
-    myMetricss: {
-      rotationPeriod: ["$metrics.rotation_period", parseInteger]
-    }
-  },
-
-  outputType: value => {
-    if (value.name === undefined) {
-      throw Error("name was not found!");
-    }
-  }
-});
-
 async function main() {
   // create data point instance
   const dp = DataPoint.create();
 
-  const result = await dp.resolve(PlanetModel, data);
+  const Planet = DataPoint.Model({
+    inputType: value => {
+      if (!value) {
+        throw TypeError("Invalid data");
+      }
+
+      if (!value.name) {
+        throw TypeError("planet's name property missing");
+      }
+    },
+    value: {
+      name: "$name",
+      rotationPeriod: ["$metrics.rotation_period", parseInteger],
+      climate: "$climate",
+      firstResident: ["$residents", DataPoint.map("$name")]
+    },
+
+    outputType: DataPoint.Schema({
+      schema
+    })
+  });
+
+  const result = await dp.resolve(Planet, data);
 
   console.dir(result);
 }

@@ -6,36 +6,64 @@ const data = {
   name: "Tatooine",
   metrics: {
     rotation_period: "23",
-    orbital_period: "304",
-    diameter: "10465",
-    gravity: "1 standard",
     surface_water: "1"
   },
   climate: "arid",
   terrain: "desert",
   population: "200000",
   residents: [
-    "https://swapi.dev/api/people/1/",
-    "https://swapi.dev/api/people/2/",
-    "https://swapi.dev/api/people/4/",
-    "https://swapi.dev/api/people/6/",
-    "https://swapi.dev/api/people/7/",
-    "https://swapi.dev/api/people/8/",
-    "https://swapi.dev/api/people/9/",
-    "https://swapi.dev/api/people/11/",
-    "https://swapi.dev/api/people/43/",
-    "https://swapi.dev/api/people/62/"
-  ],
-  films: [
-    "https://swapi.dev/api/films/5/",
-    "https://swapi.dev/api/films/4/",
-    "https://swapi.dev/api/films/6/",
-    "https://swapi.dev/api/films/3/",
-    "https://swapi.dev/api/films/1/"
-  ],
-  created: "2014-12-09T13:50:49.641000Z",
-  edited: "2014-12-21T20:48:04.175778Z",
-  url: "https://swapi.dev/api/planets/1/"
+    {
+      name: "Luke Skywalker",
+      height: "172",
+      mass: "77"
+    },
+    {
+      name: "C-3PO",
+      height: "167",
+      mass: "75"
+    },
+    {
+      name: "Darth Vader",
+      height: "202",
+      mass: "136"
+    }
+  ]
+};
+
+// simplified JSON Schema
+const schema = {
+  type: "object",
+  default: {},
+  required: ["name", "climate", "rotationPeriod", "firstResident"],
+  properties: {
+    name: {
+      $id: "#/properties/name",
+      type: "string"
+    },
+    climate: {
+      $id: "#/properties/climate",
+      type: "string"
+    },
+    rotationPeriod: {
+      $id: "#/properties/rotationPeriod",
+      type: "integer"
+    },
+    firstResident: {
+      $id: "#/properties/firstResident",
+      type: "array",
+      additionalItems: true,
+      items: {
+        $id: "#/properties/firstResident/items",
+        anyOf: [
+          {
+            $id: "#/properties/firstResident/items/anyOf/0",
+            type: "string"
+          }
+        ]
+      }
+    }
+  },
+  additionalProperties: true
 };
 
 // TODO: items to review
@@ -46,7 +74,8 @@ const data = {
 // [ ] - ObjectReducer - map properties
 // [ ] - ModelReducer - create Model
 // [ ] - ModelReducer - check input
-// [ ] - ModelReducer - check output
+// [ ] - ModelReducer - check output using plain JS type checks
+// [ ] - SchemaReducer - check output using SchemaReducer
 
 const parseInteger = value => {
   return parseInt(value, 10);
@@ -56,7 +85,7 @@ async function main() {
   // create data point instance
   const dp = DataPoint.create();
 
-  // const result = await dp.resolve(, data);
+  const result = await dp.resolve(parseInteger, "1");
 
   console.dir(result);
 }
