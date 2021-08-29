@@ -34,7 +34,7 @@ const data = {
 const schema = {
   type: "object",
   default: {},
-  required: ["name", "climate", "rotationPeriod", "firstResident"],
+  required: ["name", "climate", "rotationPeriod", "residents"],
   properties: {
     name: {
       $id: "#/properties/name",
@@ -48,15 +48,15 @@ const schema = {
       $id: "#/properties/rotationPeriod",
       type: "integer"
     },
-    firstResident: {
-      $id: "#/properties/firstResident",
+    residents: {
+      $id: "#/properties/residents",
       type: "array",
       additionalItems: true,
       items: {
-        $id: "#/properties/firstResident/items",
+        $id: "#/properties/residents/items",
         anyOf: [
           {
-            $id: "#/properties/firstResident/items/anyOf/0",
+            $id: "#/properties/residents/items/anyOf/0",
             type: "string"
           }
         ]
@@ -85,29 +85,28 @@ async function main() {
   // create data point instance
   const dp = DataPoint.create();
 
-  const Planet = DataPoint.Model({
+  const PlanetSchemaOutput = DataPoint.Schema({
+    schema
+  });
+
+  const PlanetModel = DataPoint.Model({
     inputType: value => {
       if (!value) {
-        throw TypeError("Invalid data");
+        throw TypeError("nope!");
       }
-
       if (!value.name) {
-        throw TypeError("planet's name property missing");
+        throw TypeError("name is missing");
       }
     },
     value: {
       name: "$name",
-      rotationPeriod: ["$metrics.rotation_period", parseInteger],
       climate: "$climate",
-      firstResident: ["$residents", DataPoint.map("$name")]
-    },
-
-    outputType: DataPoint.Schema({
-      schema
-    })
+      rotationPeriod: ["$metrics.rotation_period", parseInteger],
+      residents: ["$residents", DataPoint.map("$name")]
+    }
   });
 
-  const result = await dp.resolve(Planet, data);
+  const result = await dp.resolve([PlanetModel, PlanetSchemaOutput], data);
 
   console.dir(result);
 }

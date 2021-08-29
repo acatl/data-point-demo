@@ -1,5 +1,5 @@
-const DataPoint = require("data-point");
 console.clear();
+const DataPoint = require("data-point");
 
 // DEMO:
 // [ ] - Create PlanetRequest entity api: https://swapi.dev/api/planets/<NUMBER>
@@ -12,27 +12,37 @@ const parseInteger = value => {
 };
 
 const PlanetRequest = DataPoint.Request({
+  inputType: "number",
   url: "https://swapi.dev/api/planets/{value}"
 });
 
-const getURL = DataPoint.Request({
-  url: "{value}"
+const ResidentRequest = DataPoint.Request({
+  inputType: "string",
+  url: "{value}",
+  outputType: value => {
+    if (!value.name) {
+      throw TypeError("name missing");
+    }
+  }
 });
 
-const Resident = {
+const ResidentObject = {
   name: "$name",
-  species: ["$species[0]", getURL, "$name"]
+  species: "$species"
 };
 
-const Planet = {
-  name: "$name",
-  rotationPeriod: ["$rotation_period", parseInteger],
-  residents: ["$residents", DataPoint.map([getURL, Resident])]
-};
+const PlanetModel = DataPoint.Model({
+  value: {
+    name: "$name",
+    climate: "$climate",
+    rotationPeriod: ["$rotation_period", parseInteger],
+    residents: ["$residents", DataPoint.map([ResidentRequest, ResidentObject])]
+  }
+});
 
 async function main() {
   const dp = DataPoint.create();
-  const result = await dp.resolve([PlanetRequest, Planet], 1);
+  const result = await dp.resolve([PlanetRequest, PlanetModel], 1);
 
   console.dir(result, { depth: null });
 }

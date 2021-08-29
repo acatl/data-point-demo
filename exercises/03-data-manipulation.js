@@ -34,7 +34,7 @@ const data = {
 const schema = {
   type: "object",
   default: {},
-  required: ["name", "climate", "rotationPeriod", "firstResident"],
+  required: ["name", "climate", "rotationPeriod", "residents"],
   properties: {
     name: {
       $id: "#/properties/name",
@@ -48,15 +48,15 @@ const schema = {
       $id: "#/properties/rotationPeriod",
       type: "integer"
     },
-    firstResident: {
-      $id: "#/properties/firstResident",
+    residents: {
+      $id: "#/properties/residents",
       type: "array",
       additionalItems: true,
       items: {
-        $id: "#/properties/firstResident/items",
+        $id: "#/properties/residents/items",
         anyOf: [
           {
-            $id: "#/properties/firstResident/items/anyOf/0",
+            $id: "#/properties/residents/items/anyOf/0",
             type: "string"
           }
         ]
