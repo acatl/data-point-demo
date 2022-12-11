@@ -8,7 +8,7 @@
   "dependencies": {
     "data-point": "3.5.0",
     "eslint": "^6.5.1",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "mongodb": "^3.5.2",
     "nodemon": "^2.0.2",
     "prettier": "^1.19.1"
